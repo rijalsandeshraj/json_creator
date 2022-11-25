@@ -1,4 +1,4 @@
-# JSON_CREATOR for Flutter Apps
+# JSON_CREATOR for Flutter Apps Localization
 
 This is a command line Dart application that reads value of Text widget in Dart files
 of Flutter project and creates a JSON file especially useful for localization.
