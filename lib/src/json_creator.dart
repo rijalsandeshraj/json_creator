@@ -26,11 +26,11 @@ void main() {
           if (file is File) {
             print(file.path);
             String formattedPath = file.path
-                .replaceAll(RegExp(r'^[a-zA-Z]:[\/]'), '')
-                .replaceAll(RegExp(r'[\/]'), '>');
+                .replaceAll(RegExp(r'^[a-zA-Z]:[\\/]'), '')
+                .replaceAll(RegExp(r'[\\/]'), '>');
             final String content = file.readAsStringSync();
             RegExp exp = RegExp(
-                r'''(Text(Widget)?|msg)[(:]\n?\s*['"][-@.\/#&_'"\w\s]+[?]?['"]''',
+                r'''(Text(Widget)?|msg)[(:]\n?\s*['"][!"#%&'*,-.;<>=@\[\]^_`~\w\s\n]+[?]?['"]''',
                 multiLine: true);
             RegExp replaceExp =
                 RegExp(r'''(Text(Widget)?|msg)[(:]\n?\s*''', multiLine: true);
