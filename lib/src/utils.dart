@@ -12,8 +12,8 @@ String? getFolderPath() {
 
 // Function that returns String in lowerCamelCase for making keys of JSON file
 String stringInCamelCase(String lowerCaseString) {
+  String trimmedLowerCaseString = lowerCaseString.trim();
   try {
-    lowerCaseString.trim();
     List<String> splittedStrings = lowerCaseString.split(' ');
     int length = splittedStrings.length;
     if (splittedStrings.length > 1) {
@@ -28,7 +28,7 @@ String stringInCamelCase(String lowerCaseString) {
     return stringInCamelCase;
   } catch (e) {
     print('Error while parsing [ $lowerCaseString ]: ${e.toString()}');
-    return lowerCaseString;
+    return trimmedLowerCaseString;
   }
 }
 

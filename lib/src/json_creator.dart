@@ -24,38 +24,42 @@ void main() {
         );
         for (FileSystemEntity file in contents) {
           if (file is File) {
-            print(file.path);
+            print('🔰 ${file.path}');
             String formattedPath = file.path
                 .replaceAll(RegExp(r'^[a-zA-Z]:[\\/]'), '')
                 .replaceAll(RegExp(r'[\\/]'), '>');
             final String content = file.readAsStringSync();
             RegExp exp = RegExp(
-                r'''(Text(Widget)?|msg)[(:]\n?\s*['"][!"#%&'*,-.;<>=@\[\]^_`~\w\s\n]+[?]?['"]''',
+                r'''(Text(Widget)?|msg)[(:]\r?\n?\s*['"]+[!"#%&'*,-.;<>=@\[\]^_`~\w\s\r\n]+[?]?['"]+''',
                 multiLine: true);
-            RegExp replaceExp =
-                RegExp(r'''(Text(Widget)?|msg)[(:]\n?\s*''', multiLine: true);
+            RegExp replaceExp = RegExp(
+                r'''(Text(Widget)?|msg)[(:]\r?\n?\s*['"]+''',
+                multiLine: true);
+            RegExp secondReplaceExp = RegExp(r'''['"]+$''');
             Iterable<Match> matches = exp.allMatches(content);
             if (matches.isNotEmpty) {
-              print('MATCHES: ${matches.length}');
+              print('✅ MATCHES: ${matches.length}');
               outputFile.writeAsStringSync(
-                "'@_$formattedPath': {},\n",
+                "  \"@_$formattedPath\": {},\n",
                 mode: FileMode.append,
               );
               for (final Match m in matches) {
                 RegExp invalidExp = RegExp(r'[$+:()]');
-                String actualMatch = m[0]!.replaceAll(replaceExp, '');
+                String actualMatch = m[0]!
+                    .replaceAll(replaceExp, '')
+                    .replaceAll(secondReplaceExp, '');
                 String matchInLowerCase = actualMatch.toLowerCase();
-                if (matchInLowerCase.contains(invalidExp) == false) {
+                if (!matchInLowerCase.contains(invalidExp)) {
                   matchInLowerCase = stringInCamelCase(matchInLowerCase);
                 }
                 print(matchInLowerCase);
                 outputFile.writeAsStringSync(
-                  '$matchInLowerCase: $actualMatch,\n',
+                  '  "$matchInLowerCase": "$actualMatch",\n',
                   mode: FileMode.append,
                 );
               }
             } else {
-              print('NO MATCHES!');
+              print('❌ NO MATCHES!');
             }
           }
         }
