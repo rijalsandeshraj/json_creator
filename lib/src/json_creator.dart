@@ -30,7 +30,7 @@ void main() {
                 .replaceAll(RegExp(r'[\\/]'), '>');
             final String content = file.readAsStringSync();
             RegExp exp = RegExp(
-                r'''(Text(Widget)?|msg)[(:]\r?\n?\s*['"]+[!"#%&'*,-.;<>=@\[\]^_`~\w\s\r\n]+[?]?['"]+''',
+                r'''(Text(Widget)?|msg)[(:]\r?\n?\s*['"]+[!"#%&'*/\\,-.;<>=@\[\]^_`~\w\s\r\n]+[?]?['"]+''',
                 multiLine: true);
             RegExp replaceExp = RegExp(
                 r'''(Text(Widget)?|msg)[(:]\r?\n?\s*['"]+''',
@@ -44,17 +44,17 @@ void main() {
                 mode: FileMode.append,
               );
               for (final Match m in matches) {
-                RegExp invalidExp = RegExp(r'[$+:()]');
                 String actualMatch = m[0]!
                     .replaceAll(replaceExp, '')
                     .replaceAll(secondReplaceExp, '');
-                String matchInLowerCase = actualMatch.toLowerCase();
-                if (!matchInLowerCase.contains(invalidExp)) {
-                  matchInLowerCase = stringInCamelCase(matchInLowerCase);
-                }
-                print(matchInLowerCase);
+                String matchInLowerCase = actualMatch
+                    .toLowerCase()
+                    .replaceAll(RegExp(r'''[^\w\s]'''), ' ')
+                    .trim();
+                String matchInCamelCase = stringInCamelCase(matchInLowerCase);
+                print(matchInCamelCase);
                 outputFile.writeAsStringSync(
-                  '  "$matchInLowerCase": "$actualMatch",\n',
+                  '  "$matchInCamelCase": "$actualMatch",\n',
                   mode: FileMode.append,
                 );
               }
@@ -68,12 +68,12 @@ void main() {
           mode: FileMode.append,
         );
       } else {
-        print('Directory has no contents!');
+        print('❗ Directory has no contents!');
       }
     } else {
-      print('Directory does not exist!');
+      print('❗ Directory does not exist!');
     }
   } else {
-    print('You didn\'t enter the path!');
+    print('❗ You didn\'t enter the path!');
   }
 }

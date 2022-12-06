@@ -12,23 +12,29 @@ String? getFolderPath() {
 
 // Function that returns String in lowerCamelCase for making keys of JSON file
 String stringInCamelCase(String lowerCaseString) {
-  String trimmedLowerCaseString = lowerCaseString.trim();
   try {
-    List<String> splittedStrings = lowerCaseString.split(' ');
+    List<String> splittedStrings = lowerCaseString.split(RegExp(r'\s+'));
     int length = splittedStrings.length;
-    if (splittedStrings.length > 1) {
+    if (length > 1) {
       for (int i = 1; i < length; i++) {
         String initial = splittedStrings[i].substring(0, 1);
         String initialInCapital = initial.toUpperCase();
         splittedStrings[i] =
             splittedStrings[i].replaceFirst(RegExp(initial), initialInCapital);
       }
+      if (lowerCaseString.startsWith(RegExp(r'[0-9]'))) {
+        String stringInCamelCase = splittedStrings.join();
+        return 'n$stringInCamelCase';
+      }
+    } else if (lowerCaseString.startsWith(RegExp(r'[0-9]'))) {
+      return 'n$lowerCaseString';
     }
     String stringInCamelCase = splittedStrings.join();
     return stringInCamelCase;
   } catch (e) {
     print('Error while parsing [ $lowerCaseString ]: ${e.toString()}');
-    return trimmedLowerCaseString;
+    String outputString = lowerCaseString.replaceAll(' ', '');
+    return outputString;
   }
 }
 
