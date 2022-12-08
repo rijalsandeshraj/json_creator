@@ -38,7 +38,8 @@ void main() {
             RegExp secondReplaceExp = RegExp(r'''['"]+$''');
             Iterable<Match> matches = exp.allMatches(content);
             if (matches.isNotEmpty) {
-              print('✅ MATCHES: ${matches.length}');
+              print('✅ MATCHES: ${matches.length}\n'
+                  '========================================');
               outputFile.writeAsStringSync(
                 "  \"@_$formattedPath\": {},\n",
                 mode: FileMode.append,
@@ -52,14 +53,15 @@ void main() {
                     .replaceAll(RegExp(r'''[^\w\s]'''), ' ')
                     .trim();
                 String matchInCamelCase = stringInCamelCase(matchInLowerCase);
-                print(matchInCamelCase);
+                print('$matchInCamelCase => $actualMatch');
                 outputFile.writeAsStringSync(
                   '  "$matchInCamelCase": "$actualMatch",\n',
                   mode: FileMode.append,
                 );
               }
+              print('========================================\n');
             } else {
-              print('❌ NO MATCHES!');
+              print('❌ NO MATCHES!\n');
             }
           }
         }
