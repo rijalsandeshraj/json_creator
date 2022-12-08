@@ -3,6 +3,12 @@
 This is a command line Dart application that reads value of Text widget in Dart files
 of Flutter project and creates a JSON file especially useful for localization.
 
+[**NOTE**]: You may find ['json_translator'](https://pub.dev/packages/json_translator) and
+['localization_helper'](https://pub.dev/packages/localization_helper) packages on [pub.dev](https://pub.dev) helpful
+if you are doing localization of prebuilt Flutter apps.<br>
+https://pub.dev/packages/json_translator<br>
+https://pub.dev/packages/localization_helper
+
 This package intends to help Flutter developers who have already developed
 a Flutter app and are looking for localizing the project. This package gets
 and reads all the Dart files (if present) from the entered path in the terminal

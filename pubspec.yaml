@@ -1,6 +1,6 @@
 name: json_creator
 description: This is a command line Dart application that reads value of Text widget in Dart files of Flutter project and creates a JSON file especially useful for localization.
-version: 1.0.3
+version: 1.0.4
 repository: https://github.com/rijalsandeshraj/json_creator
 
 environment:

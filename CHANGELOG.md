@@ -1,3 +1,8 @@
+## 1.0.4
+
+- Adjustments in regular expressions
+- Enhancements in showing output in console
+
 ## 1.0.3
 
 - Adjustments in regex for matching strings.
